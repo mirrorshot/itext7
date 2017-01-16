@@ -91,6 +91,7 @@ public class PdfReader implements Closeable, Serializable {
 
     protected PdfTokenizer tokens;
     protected PdfEncryption decrypt;
+    protected InputStream inputStream;
 
     // here we store only the pdfVersion that is written in the document's header,
     // however it could differ from the actual pdf version that could be written in document's catalog
@@ -130,6 +131,7 @@ public class PdfReader implements Closeable, Serializable {
      */
     public PdfReader(InputStream is, ReaderProperties properties) throws IOException {
         this(new RandomAccessSourceFactory().createSource(is), properties);
+        this.inputStream = is;
     }
 
     /**
@@ -178,6 +180,7 @@ public class PdfReader implements Closeable, Serializable {
      */
     public void close() throws IOException {
         tokens.close();
+        inputStream.close();
     }
 
     /**
